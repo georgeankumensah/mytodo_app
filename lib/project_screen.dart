@@ -15,24 +15,27 @@ class ProjectScreen extends StatelessWidget {
         builder: (context, state) {
           var cubit = ProjectCubit.get(context);
           return (Scaffold(
-            appBar: AppBar(title: const Text("My Todo App")),
-            body: Center(
-              child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(cubit.name.toString()),
-                  ]),
+            appBar: AppBar(title: Text(cubit.title[cubit.currentScreenIndex]),
+            centerTitle: true,),
+            body:cubit.screens[cubit.currentScreenIndex],
+            bottomNavigationBar: BottomNavigationBar(
+              items: const [
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.home),
+                  label: 'Home',
+                ),
+                BottomNavigationBarItem(
+                    icon: Icon(Icons.location_city), label: 'Location'),
+                BottomNavigationBarItem(
+                    icon: Icon(Icons.settings), label: 'Settings'),
+              ],
+              onTap: (index) {
+                cubit.changeBottomNavigationBarItem(index);
+              },
+              currentIndex: cubit.currentScreenIndex,
+              type: BottomNavigationBarType.fixed,
+
             ),
-            bottomNavigationBar: BottomNavigationBar(items: const [
-              BottomNavigationBarItem(
-                icon: Icon(Icons.home),
-                label: 'Home',
-              ),
-              BottomNavigationBarItem(
-                  icon: Icon(Icons.location_city), label: 'Location'),
-              BottomNavigationBarItem(
-                  icon: Icon(Icons.settings), label: 'Settings'),
-            ]),
           ));
         },
       ),
